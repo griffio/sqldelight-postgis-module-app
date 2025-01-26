@@ -33,7 +33,6 @@ sqldelight {
             packageName.set("griffio.queries")
             dialect(libs.sqldelight.postgresql.dialect)
             module(project(":postgis-module"))
-
         }
     }
 }
@@ -48,9 +47,9 @@ tasks {
 }
 
 flyway {
-    url = "jdbc:postgresql://localhost:5432/srs"
-    user = "srs"
-    password = "srs"
+    url = "jdbc:postgresql://localhost:5432/geo"
+    user = "geo"
+    password = "geo"
     locations = arrayOf("filesystem:$buildDir/generated/migrations")
     baselineOnMigrate = true
     baselineVersion = "0"
