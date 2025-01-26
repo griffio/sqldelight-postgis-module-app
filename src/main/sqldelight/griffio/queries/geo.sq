@@ -1,0 +1,58 @@
+insertMakePoint:
+INSERT INTO locations (name, point)
+VALUES ('New York', ST_SetSRID(ST_MakePoint(:x::FLOAT, :y::FLOAT), :srid::INTEGER));
+
+insertMakePointM:
+INSERT INTO locations (name, pointM)
+VALUES ('New York', ST_SetSRID(ST_MakePointM(:x::FLOAT, :y::FLOAT, :m::FLOAT), :srid::INTEGER));
+
+insertMakePointZ:
+INSERT INTO locations (name, pointZ)
+VALUES ('New York', ST_SetSRID(ST_MakePoint(:x::FLOAT, :y::FLOAT, :z::FLOAT), :srid::INTEGER));
+
+insertMakePointZM:
+INSERT INTO locations (name, pointZM)
+VALUES ('New York', ST_SetSRID(ST_MakePoint(:x::FLOAT, :y::FLOAT, :z::FLOAT, :m::FLOAT), :srid::INTEGER));
+
+insertPoint:
+INSERT INTO locations (name, point)
+VALUES ('New York', ST_Point(:x::FLOAT, :y::FLOAT, :srid::INTEGER));
+
+insertPointM:
+INSERT INTO locations (name, pointM)
+VALUES ('New York', ST_PointM(:x::FLOAT, :y::FLOAT, :m::FLOAT, :srid::INTEGER));
+
+insertPointZ:
+INSERT INTO locations (name, pointZ)
+VALUES ('New York', ST_PointZ(:x::FLOAT, :y::FLOAT, :z::FLOAT, :srid::INTEGER));
+
+insertPointZM:
+INSERT INTO locations (name, pointZM)
+VALUES ('New York', ST_PointZM(:x::FLOAT, :y::FLOAT, :z::FLOAT, :m::FLOAT, :srid::INTEGER));
+
+selectWithin:
+SELECT ST_DWithin(
+  ST_GeographyFromText('SRID=4326;POINT(13.405 52.52)'),
+  ST_GeographyFromText('SRID=4326;POINT(19.945 50.0647)'),
+  :distanceMeters::REAL,
+  :useSpheroid::BOOLEAN
+);
+
+select:
+SELECT *
+FROM locations;
+
+selectSingleForce2d:
+SELECT st_force2d(pointZM)
+FROM locations
+LIMIT 1;
+
+selectPoints:
+SELECT point
+FROM locations
+WHERE point IS NOT NULL;
+
+selectLocationByDistance:
+SELECT id, name
+FROM locations
+WHERE st_dwithin(point::GEOGRAPHY, :geometry::GEOMETRY, :distanceMeters::REAL, :useSpheroid::BOOLEAN);
