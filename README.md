@@ -2,7 +2,7 @@
 
 https://github.com/cashapp/sqldelight
 
-** Experimental **
+**Experimental**
 
 Instead of a new dialect or adding PostgreSql extensions into the core PostgreSql grammar e.g. https://postgis.net/ and
 https://github.com/pgvector/pgvector
@@ -24,6 +24,8 @@ sqldelight {
 }
 ```
 
+**TODO**
+
 There are problems extending an existing grammar through more than one level of inheritance. This would require fixes to
 https://github.com/sqldelight/Grammar-Kit-Composer
 
@@ -31,5 +33,6 @@ SqlDelight needs this fix https://github.com/sqldelight/sqldelight/pull/5625 for
 
 Duplication of PostgreSql data types are required unless external parser rules are created manually
 
+PostgreSqlTypeResolver needs to be inherited rather than use delegation as needs polymorphic calls
 
 
