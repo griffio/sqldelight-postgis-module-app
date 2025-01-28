@@ -2,7 +2,12 @@
 
 https://github.com/cashapp/sqldelight
 
+
 **Experimental**
+
+Use with sqldelight branch https://github.com/griffio/sqldelight/tree/postgresql-modules with minor changes (Pushed to local maven `publishToMavenLocal`)
+
+---
 
 Instead of a new dialect or adding PostgreSql extensions into the core PostgreSql grammar e.g. https://postgis.net/ and
 https://github.com/pgvector/pgvector
