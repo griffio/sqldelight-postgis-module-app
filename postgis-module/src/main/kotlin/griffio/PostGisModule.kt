@@ -6,12 +6,17 @@ import app.cash.sqldelight.dialect.api.PrimitiveType.BOOLEAN
 import app.cash.sqldelight.dialect.api.SqlDelightModule
 import app.cash.sqldelight.dialect.api.TypeResolver
 import app.cash.sqldelight.dialects.postgresql.PostgreSqlTypeResolver
+import app.cash.sqldelight.dialects.postgresql.grammar.PostgreSqlParser
+import app.cash.sqldelight.dialects.postgresql.grammar.PostgreSqlParserUtil
 import com.alecstrong.sql.psi.core.psi.SqlFunctionExpr
 import com.alecstrong.sql.psi.core.psi.SqlTypeName
+import com.intellij.lang.parser.GeneratedParserUtilBase
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.STRING
 import com.squareup.kotlinpoet.TypeName
+import griffio.grammar.PostgisParser
 import griffio.grammar.PostgisParserUtil
+import griffio.grammar.PostgisParserUtil.type_name
 import griffio.grammar.psi.PostGisTypeName
 
 class PostGisModule : SqlDelightModule {
@@ -20,6 +25,10 @@ class PostGisModule : SqlDelightModule {
     override fun setup() {
         PostgisParserUtil.reset()
         PostgisParserUtil.overridePostgreSqlParser()
+        PostgreSqlParserUtil.type_name = GeneratedParserUtilBase.Parser { psiBuilder, i ->
+            type_name?.parse(psiBuilder, i) ?: PostgisParser.type_name_real(psiBuilder, i)
+                    || PostgreSqlParser.type_name_real(psiBuilder, i)
+        }
     }
 }
 
@@ -44,15 +53,17 @@ enum class PostGisSqlType(override val javaType: TypeName) : DialectType {
 
 // Change to inheritance so that definitionType can be called by polymorphism - not possible with delegation
 private class PostGisTypeResolver(private val parentResolver: TypeResolver) : PostgreSqlTypeResolver(parentResolver) {
+    override fun definitionType(typeName: SqlTypeName): IntermediateType {
+        return when (typeName) {
+            is PostGisTypeName ->
+                when {
+                    typeName.geometryDataType != null -> IntermediateType(PostGisSqlType.GEOMETRY)
+                    typeName.geographyDataType != null -> IntermediateType(PostGisSqlType.GEOGRAPHY)
+                    else -> error("postgis typename")
+                }
 
-    override fun definitionType(typeName: SqlTypeName): IntermediateType = with(typeName) {
-        check(this is PostGisTypeName)
-        val type = (when {
-            geometryDataType != null -> IntermediateType(PostGisSqlType.GEOMETRY)
-            geographyDataType != null -> IntermediateType(PostGisSqlType.GEOGRAPHY)
             else -> super.definitionType(typeName)
-        })
-        return type
+        }
     }
 
     override fun functionType(functionExpr: SqlFunctionExpr): IntermediateType? =
