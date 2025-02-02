@@ -1,7 +1,5 @@
 package griffio
 
-import app.cash.sqldelight.dialect.api.SqlDelightModule
-import app.cash.sqldelight.dialects.postgresql.PostgreSqlDialect
 import app.cash.sqldelight.driver.jdbc.asJdbcDriver
 import org.postgresql.ds.PGSimpleDataSource
 
