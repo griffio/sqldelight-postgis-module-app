@@ -30,7 +30,6 @@ sqldelight {
 ```
 
 **TODO**
-
 There are problems extending an existing grammar through more than one level of inheritance. This would require fixes to
 https://github.com/sqldelight/Grammar-Kit-Composer
 
@@ -41,3 +40,8 @@ Duplication of PostgreSql data types are required unless external parser rules a
 PostgreSqlTypeResolver needs to be inherited rather than use delegation as needs polymorphic calls
 
 
+```shell
+createdb geo && 
+./gradlew build &&
+./gradlew flywayMigrate
+```
