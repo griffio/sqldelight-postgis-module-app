@@ -48,8 +48,8 @@ tasks {
 
 flyway {
     url = "jdbc:postgresql://localhost:5432/geo"
-    user = "geo"
-    password = "geo"
+    user = "postgres"
+    password = ""
     locations = arrayOf("filesystem:$buildDir/generated/migrations")
     baselineOnMigrate = true
     baselineVersion = "0"
