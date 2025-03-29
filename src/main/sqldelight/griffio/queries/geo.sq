@@ -47,6 +47,11 @@ SELECT st_force2d(pointZM)
 FROM locations
 LIMIT 1;
 
+
+selectForce2d:
+SELECT st_force2d(pointZM)
+FROM locations;
+
 selectPoints:
 SELECT point
 FROM locations

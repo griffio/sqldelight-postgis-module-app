@@ -64,6 +64,8 @@ fun main() {
     }
 
     // Get 2D representation of points
-    val point2d = sample.geoQueries.selectSingleForce2d().executeAsOneOrNull()
-    println("2D point: $point2d")
+    val nullPoint2d = sample.geoQueries.selectSingleForce2d().executeAsOneOrNull()
+    println("2D point: $nullPoint2d")
+
+    sample.geoQueries.insertPointZM(-71.104, 42.315, 3.4, 4.5, 4326)
 }
