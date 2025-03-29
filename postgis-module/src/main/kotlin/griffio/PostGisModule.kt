@@ -3,6 +3,7 @@ package griffio
 import app.cash.sqldelight.dialect.api.DialectType
 import app.cash.sqldelight.dialect.api.IntermediateType
 import app.cash.sqldelight.dialect.api.PrimitiveType.BOOLEAN
+import app.cash.sqldelight.dialect.api.PrimitiveType.TEXT
 import app.cash.sqldelight.dialect.api.SqlDelightModule
 import app.cash.sqldelight.dialect.api.TypeResolver
 import app.cash.sqldelight.dialects.postgresql.PostgreSqlTypeResolver
@@ -68,9 +69,9 @@ private class PostGisTypeResolver(private val parentResolver: TypeResolver) : Po
 
     override fun functionType(functionExpr: SqlFunctionExpr): IntermediateType? =
         when (functionExpr.functionName.text.lowercase()) {
-            "st_geographyfromtext" -> IntermediateType(PostGisSqlType.GEOGRAPHY)
-            "st_dwithin" -> IntermediateType(BOOLEAN)
-            "st_force2d" -> IntermediateType(PostGisSqlType.GEOMETRY)
+            "st_geographyfromtext" -> IntermediateType(PostGisSqlType.GEOGRAPHY).nullableIf(resolvedType(functionExpr.exprList[0]).javaType.isNullable)
+            "st_dwithin" -> IntermediateType(BOOLEAN).nullableIf(resolvedType(functionExpr.exprList[0]).javaType.isNullable)
+            "st_force2d" -> IntermediateType(TEXT).nullableIf(resolvedType(functionExpr.exprList[0]).javaType.isNullable)
             else -> parentResolver.functionType(functionExpr)
         }
 }
