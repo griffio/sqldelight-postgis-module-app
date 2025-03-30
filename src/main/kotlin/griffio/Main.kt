@@ -68,4 +68,8 @@ fun main() {
     println("2D point: $nullPoint2d")
 
     sample.geoQueries.insertPointZM(-71.104, 42.315, 3.4, 4.5, 4326)
+
+    sample.geoQueries.selectSTAsText().executeAsList().forEach {
+        println("$it")
+    }
 }

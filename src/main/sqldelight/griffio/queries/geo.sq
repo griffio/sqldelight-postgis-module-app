@@ -61,3 +61,7 @@ selectLocationByDistance:
 SELECT id, name
 FROM locations
 WHERE st_dwithin(point::GEOGRAPHY, :geometry::GEOMETRY, :distanceMeters::REAL, :useSpheroid::BOOLEAN);
+
+selectSTAsText:
+SELECT id, name, ST_AsText(point) AS point, ST_AsText(pointM) AS pointM, ST_AsText(pointZ) AS pointZ, ST_AsText(pointZM) AS pointZM
+FROM locations;

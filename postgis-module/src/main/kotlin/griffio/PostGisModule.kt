@@ -72,6 +72,7 @@ private class PostGisTypeResolver(private val parentResolver: TypeResolver) : Po
             "st_geographyfromtext" -> IntermediateType(PostGisSqlType.GEOGRAPHY).nullableIf(resolvedType(functionExpr.exprList[0]).javaType.isNullable)
             "st_dwithin" -> IntermediateType(BOOLEAN).nullableIf(resolvedType(functionExpr.exprList[0]).javaType.isNullable)
             "st_force2d" -> IntermediateType(TEXT).nullableIf(resolvedType(functionExpr.exprList[0]).javaType.isNullable)
+            "st_astext" -> IntermediateType(TEXT).nullableIf(resolvedType(functionExpr.exprList[0]).javaType.isNullable)
             else -> parentResolver.functionType(functionExpr)
         }
 }
