@@ -2,6 +2,7 @@ package griffio
 
 import app.cash.sqldelight.ColumnAdapter
 import app.cash.sqldelight.driver.jdbc.asJdbcDriver
+import griffio.migrations.GlobalPoints
 import griffio.migrations.Locations
 import griffio.queries.Sample
 import net.postgis.jdbc.geometry.Point
@@ -22,10 +23,11 @@ private val pointAdapter = object : ColumnAdapter<Point, String> {
 }
 
 private val adapters = Locations.Adapter(pointAdapter, pointAdapter, pointAdapter, pointAdapter)
+private val geoAdapters = GlobalPoints.Adapter(pointAdapter)
 
 fun main() {
     val driver = getSqlDriver()
-    val sample = Sample(driver, adapters)
+    val sample = Sample(driver, geoAdapters, adapters)
 
     // Insert points using different PostGIS functions
     sample.geoQueries.insertMakePoint(
@@ -72,4 +74,11 @@ fun main() {
     sample.geoQueries.selectSTAsText().executeAsList().forEach {
         println("$it")
     }
+
+    sample.geoQueries.insertGlobalPoint("X", -77.0092, 38.889588, 4326)
+
+    sample.geoQueries.selectGlobalPoints().executeAsList().forEach {
+        println("$it")
+    }
+
 }

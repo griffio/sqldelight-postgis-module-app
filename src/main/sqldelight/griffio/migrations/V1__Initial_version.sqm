@@ -15,3 +15,9 @@ CREATE INDEX idx_locations_point ON locations USING GIST(point);
 CREATE INDEX idx_locations_pointm ON locations USING GIST(pointM);
 CREATE INDEX idx_locations_pointz ON locations USING GIST(pointZ);
 CREATE INDEX idx_locations_pointzm ON locations USING GIST(pointZM);
+
+CREATE TABLE globalPoints (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    location GEOGRAPHY(Point, 4326) AS Point NOT NULL
+);

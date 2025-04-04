@@ -30,6 +30,9 @@ insertPointZM:
 INSERT INTO locations (name, pointZM)
 VALUES ('New York', ST_PointZM(:x::FLOAT, :y::FLOAT, :z::FLOAT, :m::FLOAT, :srid::INTEGER));
 
+insertGlobalPoint:
+INSERT INTO globalPoints (name, location) VALUES (?, ST_Point(:x::FLOAT, :y::FLOAT, :srid::INTEGER));
+
 selectWithin:
 SELECT ST_DWithin(
   ST_GeographyFromText('SRID=4326;POINT(13.405 52.52)'),
@@ -46,7 +49,6 @@ selectSingleForce2d:
 SELECT st_force2d(pointZM)
 FROM locations
 LIMIT 1;
-
 
 selectForce2d:
 SELECT st_force2d(pointZM)
@@ -65,3 +67,7 @@ WHERE st_dwithin(point::GEOGRAPHY, :geometry::GEOMETRY, :distanceMeters::REAL, :
 selectSTAsText:
 SELECT id, name, ST_AsText(point) AS point, ST_AsText(pointM) AS pointM, ST_AsText(pointZ) AS pointZ, ST_AsText(pointZM) AS pointZM
 FROM locations;
+
+selectGlobalPoints:
+SELECT id, name, location
+FROM globalPoints;
