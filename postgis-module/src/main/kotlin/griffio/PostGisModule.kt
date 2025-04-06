@@ -15,6 +15,7 @@ import com.intellij.lang.parser.GeneratedParserUtilBase
 import com.squareup.kotlinpoet.CodeBlock
 import com.squareup.kotlinpoet.STRING
 import com.squareup.kotlinpoet.TypeName
+import griffio.PostGisSqlType.GEOMETRY
 import griffio.grammar.PostgisParser
 import griffio.grammar.PostgisParserUtil
 import griffio.grammar.PostgisParserUtil.type_name
@@ -73,6 +74,8 @@ private class PostGisTypeResolver(private val parentResolver: TypeResolver) : Po
             "st_dwithin" -> IntermediateType(BOOLEAN).nullableIf(resolvedType(functionExpr.exprList[0]).javaType.isNullable)
             "st_force2d" -> IntermediateType(TEXT).nullableIf(resolvedType(functionExpr.exprList[0]).javaType.isNullable)
             "st_astext" -> IntermediateType(TEXT).nullableIf(resolvedType(functionExpr.exprList[0]).javaType.isNullable)
+            "st_makepoint" -> IntermediateType(GEOMETRY)
+            "st_setsrid" -> IntermediateType(GEOMETRY)
             else -> parentResolver.functionType(functionExpr)
         }
 }
