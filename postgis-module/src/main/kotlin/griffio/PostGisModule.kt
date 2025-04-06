@@ -2,6 +2,7 @@ package griffio
 
 import app.cash.sqldelight.dialect.api.DialectType
 import app.cash.sqldelight.dialect.api.IntermediateType
+import app.cash.sqldelight.dialect.api.PrimitiveType
 import app.cash.sqldelight.dialect.api.PrimitiveType.BOOLEAN
 import app.cash.sqldelight.dialect.api.PrimitiveType.TEXT
 import app.cash.sqldelight.dialect.api.SqlDelightModule
@@ -76,6 +77,9 @@ private class PostGisTypeResolver(private val parentResolver: TypeResolver) : Po
             "st_astext" -> IntermediateType(TEXT).nullableIf(resolvedType(functionExpr.exprList[0]).javaType.isNullable)
             "st_makepoint" -> IntermediateType(GEOMETRY)
             "st_setsrid" -> IntermediateType(GEOMETRY)
+            "st_x" -> IntermediateType(PrimitiveType.REAL).nullableIf(resolvedType(functionExpr.exprList[0]).javaType.isNullable)
+            "st_y" -> IntermediateType(PrimitiveType.REAL).nullableIf(resolvedType(functionExpr.exprList[0]).javaType.isNullable)
+            "st_z" -> IntermediateType(PrimitiveType.REAL).nullableIf(resolvedType(functionExpr.exprList[0]).javaType.isNullable)
             else -> parentResolver.functionType(functionExpr)
         }
 }
