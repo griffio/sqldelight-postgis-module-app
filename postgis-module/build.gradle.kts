@@ -5,7 +5,7 @@ plugins {
 }
 
 repositories {
-    mavenLocal()
+    maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
     mavenCentral()
     gradlePluginPortal()
     maven("https://cache-redirector.jetbrains.com/download-pgp-verifier")
@@ -21,6 +21,7 @@ dependencies {
     implementation(libs.sqldelight.dialect.api)
     implementation(libs.sqldelight.postgresql.dialect)
     implementation(libs.sqldelight.compiler.env)
+    implementation("net.postgis:postgis-jdbc:2024.1.0")
 }
 
 publishing {
