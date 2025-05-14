@@ -5,6 +5,9 @@ import app.cash.sqldelight.driver.jdbc.asJdbcDriver
 import griffio.migrations.GlobalPoints
 import griffio.migrations.Locations
 import griffio.queries.Sample
+import net.postgis.jdbc.PGgeography
+import net.postgis.jdbc.PGgeometry
+import net.postgis.jdbc.geometry.Geometry
 import net.postgis.jdbc.geometry.Point
 import net.postgis.jdbc.geometry.binary.BinaryParser
 import net.postgis.jdbc.geometry.binary.BinaryWriter
@@ -79,6 +82,10 @@ fun main() {
 
     sample.geoQueries.selectGlobalPoints().executeAsList().forEach {
         println("$it")
+    }
+
+    sample.geoQueries.selectGlobalLatitudeLongitude().executeAsList().forEach {
+        println("lat ${it.latitude} lon ${it.longitude}")
     }
 
 }
