@@ -4,7 +4,7 @@ https://github.com/cashapp/sqldelight
 
 **Experimental**
 
-Use with SqlDelight 2.1.0-SNAPSHOT
+Use with SqlDelight 2.1.0
 ---
 
 Instead of a new dialect or adding PostgreSql extensions into the core PostgreSql grammar e.g. https://postgis.net/ and
