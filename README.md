@@ -21,11 +21,16 @@ sqldelight {
             migrationOutputFileFormat = ".sql"
             packageName.set("griffio.queries")
             dialect(libs.sqldelight.postgresql.dialect)
-            module(project(":postgis-module")) // module can be local project or external dependency
+            module(project(":postgis-module")) // module can be local project
+           // or external module("io.github.griffio:sqldelight-postgis:0.0.1")
         }
     }
 }
 ```
+
+`postgis-module` published in Maven Central https://central.sonatype.com/artifact/io.github.griffio/sqldelight-postgis/versions
+
+`io.github.griffio:sqldelight-postgis:0.0.1`
 
 **TODO**
 There are problems extending an existing grammar through more than one level of inheritance. This would require fixes to
