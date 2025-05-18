@@ -32,7 +32,7 @@ sqldelight {
             migrationOutputFileFormat = ".sql"
             packageName.set("griffio.queries")
             dialect(libs.sqldelight.postgresql.dialect)
-            module(project(":postgis-module"))
+            module(":postgis-module") // or module("io.github.griffio:sqldelight-postgis:0.0.1")
         }
     }
 }
