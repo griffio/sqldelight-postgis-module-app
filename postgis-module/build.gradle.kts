@@ -5,10 +5,9 @@ plugins {
     alias(libs.plugins.grammarKitComposer)
     id("maven-publish")
     id("org.jreleaser") version "1.18.0"
-    id("signing")
 }
 
-version = "0.0.1"
+version = "0.0.2"
 group = "io.github.griffio"
 
 repositories {
@@ -39,9 +38,9 @@ publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
-            groupId = "io.github.griffio"
             artifactId = "sqldelight-postgis"
-            version = "0.0.1"
+            groupId = project.group.toString()
+            version = project.version.toString()
 
             pom {
                 name.set("SQLDelight PostGIS Module")
@@ -88,14 +87,13 @@ jreleaser {
         signing {
             active = Active.ALWAYS
         }
-            maven {
-            mavenCentral {
+        maven {
+            mavenCentral { // https://jreleaser.org/guide/latest/reference/deploy/maven/maven-central.html
                 create("maven-central") {
                     active = Active.ALWAYS
-                    url = "https://central.sonatype.com/api/v1/publisher"
-                    signing
                     applyMavenCentralRules = true
-                    stagingRepositories.add("build/staging-deploy")
+                    url = "https://central.sonatype.com/api/v1/publisher"
+                    stagingRepository("build/staging-deploy")
                 }
             }
         }
