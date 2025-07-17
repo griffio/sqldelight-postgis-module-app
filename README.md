@@ -32,16 +32,13 @@ sqldelight {
 
 `io.github.griffio:sqldelight-postgis:0.0.1`
 
-**TODO**
+**NOTES**
 There are problems extending an existing grammar through more than one level of inheritance. This would require fixes to
-https://github.com/sqldelight/Grammar-Kit-Composer
+https://github.com/sqldelight/Grammar-Kit-Composer.
 
-SqlDelight needs this fix https://github.com/sqldelight/sqldelight/pull/5625 for the module resolver to be the first
+Duplication of PostgreSql data types are required unless external parser rules are created manually.
 
-Duplication of PostgreSql data types are required unless external parser rules are created manually
-
-PostgreSqlTypeResolver needs to be inherited rather than use delegation as needs polymorphic calls
-
+PostgreSqlTypeResolver uses inheritance rather than use delegation as needs polymorphic calls.
 
 ```shell
 createdb geo && 
