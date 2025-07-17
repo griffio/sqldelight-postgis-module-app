@@ -33,6 +33,7 @@ sqldelight {
 `io.github.griffio:sqldelight-postgis:0.0.1`
 
 **NOTES**
+
 There are problems extending an existing grammar through more than one level of inheritance. This would require fixes to
 https://github.com/sqldelight/Grammar-Kit-Composer.
 
